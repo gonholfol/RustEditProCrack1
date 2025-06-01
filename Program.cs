@@ -12,12 +12,14 @@ namespace RustEditProCrack
             Console.WriteLine("Built with Mono.Cecil for safe IL manipulation");
             Console.WriteLine();
 
-            string dllPath = "Assembly-CSharp.dll";
+            // Get DLL path from command line arguments or use default
+            string dllPath = args.Length > 0 ? args[0] : "Assembly-CSharp.dll";
             
             if (!File.Exists(dllPath))
             {
                 Console.WriteLine($"❌ Error: {dllPath} not found!");
-                Console.WriteLine("Please place Assembly-CSharp.dll in the project root directory.");
+                Console.WriteLine("Usage: dotnet run -- \"Managed/Assembly-CSharp.dll\"");
+                Console.WriteLine("Or place Assembly-CSharp.dll in the project root directory.");
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
                 return;
