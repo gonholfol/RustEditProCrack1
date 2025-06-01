@@ -5,7 +5,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Collections.Generic;
 
-namespace DllEditor
+namespace RustEditProCrack
 {
     public class DllPatcher : IDisposable
     {

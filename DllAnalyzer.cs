@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace DllEditor
+namespace RustEditProCrack
 {
     public class ObfuscatedNames
     {
