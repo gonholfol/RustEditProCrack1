@@ -20,8 +20,6 @@ namespace RustEditProCrack
                 Console.WriteLine($"❌ Error: {dllPath} not found!");
                 Console.WriteLine("Usage: dotnet run -- \"Managed/Assembly-CSharp.dll\"");
                 Console.WriteLine("Or place Assembly-CSharp.dll in the project root directory.");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
                 return;
             }
 
@@ -59,10 +57,6 @@ namespace RustEditProCrack
                 Console.WriteLine($"💥 Critical error: {ex.Message}");
                 Console.WriteLine($"📋 Details: {ex.StackTrace}");
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
         }
     }
 } 
