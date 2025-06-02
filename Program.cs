@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using RustEditProCrack.Core;
 
 namespace RustEditProCrack
 {
@@ -7,56 +8,81 @@ namespace RustEditProCrack
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("🤖 === DLL EDITOR - UNITY ASSEMBLY PATCHER ===");
-            Console.WriteLine("Advanced tool for patching Unity-based applications");
-            Console.WriteLine("Built with Mono.Cecil for safe IL manipulation");
-            Console.WriteLine();
+            Console.WriteLine("🚀 RustEdit Pro Crack - Автономный DLL Патчер");
+            Console.WriteLine("================================================");
 
-            // Get DLL path from command line arguments or use default
-            string dllPath = args.Length > 0 ? args[0] : "Assembly-CSharp.dll";
-            
-            if (!File.Exists(dllPath))
+            if (args.Length == 0)
             {
-                Console.WriteLine($"❌ Error: {dllPath} not found!");
-                Console.WriteLine("Usage: dotnet run -- \"Managed/Assembly-CSharp.dll\"");
-                Console.WriteLine("Or place Assembly-CSharp.dll in the project root directory.");
+                ShowUsage();
                 return;
             }
 
-            try
+            string dllPath = args[0];
+            
+            if (string.IsNullOrEmpty(dllPath))
             {
-                Console.WriteLine($"📂 Loading assembly: {dllPath}");
-                Console.WriteLine("🔍 Starting fully autonomous patching process...");
-                Console.WriteLine();
+                Console.WriteLine("❌ Не указан путь к DLL файлу");
+                ShowUsage();
+                return;
+            }
 
-                // Initialize patcher and run fully autonomous execution
-                using (var patcher = new DllPatcher(dllPath))
+            RunPatching(dllPath);
+        }
+
+        static void RunPatching(string dllPath)
+        {
+            Console.WriteLine($"📂 Использую указанный путь: {dllPath}");
+
+            if (!File.Exists(dllPath))
+            {
+                Console.WriteLine($"❌ Файл не найден: {dllPath}");
+                return;
+            }
+
+            using (var manager = new DllManager())
+            {
+                Console.WriteLine($"📂 Загружаю сборку: {dllPath}");
+                if (!manager.LoadAssembly(dllPath))
                 {
-                    bool success = patcher.FullyAutonomousExecution();
+                    Console.WriteLine("❌ Не удалось загрузить сборку");
+                    return;
+                }
+
+                if (manager.ApplyAllPatches())
+                {
+                    Console.WriteLine("\n💾 Сохраняю пропатченную сборку...");
                     
-                    if (success)
+                    var directory = Path.GetDirectoryName(dllPath);
+                    var filename = Path.GetFileNameWithoutExtension(dllPath);
+                    var extension = Path.GetExtension(dllPath);
+                    var outputPath = Path.Combine(directory, $"{filename}-Patched{extension}");
+                    
+                    if (manager.SavePatched(outputPath))
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("🎉 === PATCHING COMPLETED SUCCESSFULLY ===");
-                        Console.WriteLine("✅ All patches applied and saved automatically");
-                        Console.WriteLine("📂 Output: Assembly-CSharp_Modifi.dll");
-                        Console.WriteLine();
-                        Console.WriteLine("🚀 Your patched DLL is ready to use!");
+                        Console.WriteLine("✅ Патчинг завершен успешно!");
+                        Console.WriteLine($"📁 Результат: {outputPath}");
+                        Console.WriteLine("\n🎉 Готово! Замените оригинальный файл на пропатченный.");
                     }
                     else
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("❌ === PATCHING FAILED ===");
-                        Console.WriteLine("Some patches could not be applied.");
-                        Console.WriteLine("Check the output above for details.");
+                        Console.WriteLine("❌ Ошибка сохранения пропатченного файла");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("❌ Патчинг завершился с ошибками");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"💥 Critical error: {ex.Message}");
-                Console.WriteLine($"📋 Details: {ex.StackTrace}");
-            }
+        }
+
+        static void ShowUsage()
+        {
+            Console.WriteLine("=== RustEdit Pro Crack Tool ===");
+            Console.WriteLine("Использование:");
+            Console.WriteLine("  dotnet run <dll-path>");
+            Console.WriteLine();
+            Console.WriteLine("Пример:");
+            Console.WriteLine("  dotnet run Assembly-CSharp.dll");
         }
     }
 } 

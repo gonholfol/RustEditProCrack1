@@ -4,17 +4,10 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <AssemblyName>RustEditProCrack</AssemblyName>
-    <RootNamespace>RustEditProCrack</RootNamespace>
-    <AssemblyTitle>DLL Editor - Автоматический патчер</AssemblyTitle>
-    <AssemblyDescription>Инструмент для автоматического патчинга Unity/C# DLL файлов</AssemblyDescription>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Product>DLL Editor</Product>
-    <Copyright>Copyright © 2024</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ICSharpCode.Decompiler" Version="8.2.0.7535" />
     <PackageReference Include="Mono.Cecil" Version="0.11.5" />
   </ItemGroup>
 
